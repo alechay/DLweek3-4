@@ -2,14 +2,14 @@
 
 ## Objective
 
-The goal for this assignment was to work through the NVIDIA Radiomics Deep Learning exercise. I followed along with the Jupyter Notebook as it showed me how to build and test a model. Then, I went back and explored how I could change and possibly improve the model. I tried the following things:
-1. Adding additional layers to the network
-2. Changing the number of neurons in those layers
-3. Changing some of the hyper-parameters in the network configuration like dropout or learning rate, etc.
+The goal for this assignment was to work through the NVIDIA Radiomics Deep Learning exercise. I followed along with the Jupyter Notebook as it showed me how to build and test a model. Then, I went back and explored how I could change and possibly improve the model. I tried the following things: 
+1. Adding additional layers to the network
+2. Changing the number of neurons in those layers
+3. Changing some of the hyper-parameters in the network configuration like dropout or learning rate, etc.
 
 ## Baseline model performance
 
-I ran the default model that they provided and these are the results I got.
+I ran the default model that they provided and these are the results I got. Model summary:
 ```
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
@@ -67,11 +67,13 @@ _________________________________________________________________
 None
 ```
 
-Insert picture of performance
+![base](https://user-images.githubusercontent.com/55260698/110213790-899a6a00-7e6f-11eb-9ad8-34678f8b260c.png)
+
+F1 score was 0.69
 
 ## Add layers
 
-I added the following layers at the beginning of the model
+I added the following layer at the beginning of the model
 ```
     model.add(Conv2D(8, (3, 3), activation='tanh',kernel_initializer='he_uniform', 
                      input_shape=(240, 240, 1)))
@@ -80,7 +82,9 @@ I added the following layers at the beginning of the model
     model.add(MaxPooling2D(pool_size=(2, 2)))
 ```
 
-Insert picture of performance
+![addlayers](https://user-images.githubusercontent.com/55260698/110213809-a3d44800-7e6f-11eb-9e01-33429a01ba8f.png)
+
+F1 score was 0.59 and training time was slightly slower.
 
 ## Change number of neurons
 
@@ -90,7 +94,9 @@ I changed the number of neurons in the dense layer from 128 to 64.
 model.add(Dense(64))
 ```
 
-Insert picture of performance
+![num_neurons](https://user-images.githubusercontent.com/55260698/110213827-bbabcc00-7e6f-11eb-9a47-48fd032fad58.png)
+
+F1 score was 0.62 and training time was slightly faster.
 
 ## Try different optimizer
 
@@ -101,7 +107,9 @@ altoptimizer=keras.optimizers.SGD(lr=0.0001)
 model.compile(optimizer=altoptimizer, loss='categorical_crossentropy', metrics=['accuracy'])
 ```
 
-Insert picture of performance
+![sgd_optimizer](https://user-images.githubusercontent.com/55260698/110213891-f7469600-7e6f-11eb-9bf8-80f000949463.png)
+
+F1 score was 0.62
 
 ## Change convolution size
 
@@ -111,7 +119,9 @@ I changed the convolution size in each layer to (5, 5)
                      input_shape=(240, 240, 1)))
 ```
 
-Insert picture of performance
+![change_convsize](https://user-images.githubusercontent.com/55260698/110213900-04638500-7e70-11eb-84e9-a9aee49d2b52.png)
+
+F1 score was 0.73 and training time was slightly faster.
 
 ## Change dropout rate
 
@@ -120,7 +130,9 @@ I changed the dropout rate from 0.25 to 0.33
 model.add(Dropout(0.33))
 ```
 
-Insert picture of performance
+![dropout](https://user-images.githubusercontent.com/55260698/110213919-1b09dc00-7e70-11eb-8e0f-8bee715d4e14.png)
+
+F1 score was 0.65
 
 ## Conclusion
 
